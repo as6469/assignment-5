@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Data</title>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<table id="userData">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    fetch('https://randomuser.me/api/?results=5')
+        .then(response => response.json())
+        .then(data => {
+            const users = data.results;
+            users.forEach(user => {
+                const firstName = user.name.first;
+                const city = user.location.city;
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${firstName}</td>
+                    <td>${city}</td>
+                `;
+                document.querySelector('#userData tbody').appendChild(newRow);
+            });
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+</script>
+
+</body>
+</html>
